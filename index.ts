@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 import { cp, mkdir, readdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { renderHome } from "./templates/home.ts";

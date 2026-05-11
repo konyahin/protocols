@@ -4,6 +4,10 @@
   "bin": {
     "protocols": "./index.ts"
   },
+  "engines": {
+    "node": ">=23.6.0"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "typescript": "^5"
   },
