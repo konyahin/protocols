@@ -4,13 +4,14 @@ import type { HomePage } from "./types.ts";
 export function renderHome(data: HomePage): string {
     const items = data.protocols
         .map((p) => `
-<a href="${p.url}">
+<a class="protocol-card" href="${p.url}">
     <article>
         <h3>${p.title}</h3>
-        ${p.description}
+        <div class="protocol-card-desc">${p.description}</div>
+        <span class="protocol-card-arrow" aria-hidden="true">&rarr;</span>
     </article>
 </a>`)
-        .join("\n");
+        .join("");
 
     return renderBase({
         title: "Protocols",
@@ -18,13 +19,15 @@ export function renderHome(data: HomePage): string {
 <header>
     <hgroup>
         <h1>protocols</h1>
+        <p>Step-by-step routines</p>
     </hgroup>
 </header>
 <main>
-    ${items}
+    <div class="protocols-grid">
+        ${items}
+    </div>
 </main>
 <footer>
     <a id="reset-cache" href="/">Reset cache</a>
-</footer>`,
-    });
+</footer>`});
 }

@@ -15,37 +15,42 @@ document.getElementById("reset-cache")?.addEventListener("click", async (e) => {
     location.reload();
 });
 
-let currentStep = 0;
-document.querySelectorAll<HTMLElement>(".step").forEach((el) => {
-    if (el.id !== "step-" + currentStep) {
-        el.hidden = true;
+const prev = document.getElementById("prev-step") as HTMLButtonElement;
+const next = document.getElementById("next-step") as HTMLButtonElement;
+if (prev) {
+    let current = 0;
+
+    function show(step: number): void {
+        const shell = document.querySelector(".protocol-shell") as HTMLElement;
+        const total = Number(shell.dataset["total"] ?? "0");
+        if (step < 0 || step >= total || step === current) return;
+        
+        const target = document.getElementById(`step-${step}`) as HTMLElement;
+        target.hidden = false;
+
+        const previous = document.getElementById(`step-${current}`) as HTMLElement;
+        previous.hidden = true;
+
+        const counter = document.getElementById("step-current") as HTMLElement;
+        counter.textContent = String(step + 1);
+
+        const fill = document.getElementById("progress-fill") as HTMLElement;
+        fill.style.width = `${((step + 1) / total) * 100}%`;
+
+        const progress = shell.querySelector(".protocol-progress") as HTMLElement;
+        progress.setAttribute("aria-valuenow", String(step + 1));
+
+        prev.disabled = step === 0;
+        next.disabled = step === total - 1;
+
+        current = step;
     }
 
-    el.querySelector(".next")?.addEventListener("click", createSliderListener(1));
-    el.querySelector(".prev")?.addEventListener("click", createSliderListener(-1));
-});
+    prev?.addEventListener("click", () => show(current - 1));
+    next?.addEventListener("click", () => show(current + 1));
 
-function createSliderListener(step: number) {
-    return function (e: Event) {
-        e.preventDefault();
-
-        const newStep = currentStep + step;
-        if (newStep < 0) {
-            return
-        }
-
-        const newArticle = document.getElementById("step-" + newStep);
-        if (newArticle) {
-            newArticle.hidden = false
-        } else {
-            return
-        }
-
-        const currentArticle = document.getElementById("step-" + currentStep);
-        if (currentArticle) {
-            currentArticle.hidden = true
-        }
-
-        currentStep = newStep;
-    }
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") show(current + 1);
+        else if (e.key === "ArrowLeft") show(current - 1);
+    });
 }
