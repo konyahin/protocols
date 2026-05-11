@@ -2,11 +2,22 @@ import { renderBase } from "./base.ts";
 import type { Protocol } from "./types.ts";
 
 export function renderProtocol(data: Protocol): string {
-    const total = data.steps.length;
-    const steps = data.steps
+    const total = data.steps.length + 1;
+    let steps = data.steps
         .map((s, i) => renderStep(i, total, s))
         .join("");
+
     const initialProgress = total > 0 ? (1 / total) * 100 : 0;
+
+    steps += `
+<article id="step-${total - 1}" class="step step-final" hidden>
+    <div class="step-badge">Complete</div>
+    <div class="step-content">
+        <h2>Well done.</h2>
+        <p><span id="final-phrase">Take a breath — you earned it.</span></p>
+    </div>
+</article>
+    `;
 
     return renderBase({
         title: data.title,

@@ -125,6 +125,32 @@ main {
     border-radius: 999px;
 }
 
+.step-final {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.step-final .step-badge {
+    align-self: center;
+    color: var(--pico-ins-color, #16a34a);
+    background: color-mix(in srgb, var(--pico-ins-color, #16a34a) 14%, transparent);
+}
+
+.step-final .step-content {
+    flex: 0 0 auto;
+    max-width: 32ch;
+}
+
+.step-final h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.step-final p {
+    color: var(--pico-muted-color);
+}
+
 .step-content {
     flex: 1;
 }
