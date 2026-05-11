@@ -1,6 +1,9 @@
 {
   "name": "protocols",
   "module": "index.ts",
+  "bin": {
+    "protocols": "./index.ts"
+  },
   "peerDependencies": {
     "typescript": "^5"
   },

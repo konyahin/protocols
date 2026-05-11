@@ -1,3 +1,4 @@
+#!/usr/bin/env bun
 import { cp, mkdir, readdir, writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 import { renderHome } from "./templates/home.ts";
@@ -6,13 +7,24 @@ import type { Protocol } from "./templates/types.ts";
 import { marked, type Token, type Tokens } from "marked";
 import { build } from "esbuild";
 
-const OUTPUT = "./output";
-const INPUT = "./protocols";
+const PKG_DIR = import.meta.dirname;
+const INPUT = process.cwd();
+
+const OUTPUT = path.join(INPUT, "output");
+const STATIC_DIR = path.join(PKG_DIR, "static");
+const CLIENT_MAIN = path.join(PKG_DIR, "client/main.ts");
+const CLIENT_CACHE = path.join(PKG_DIR, "client/cache.ts");
+
+const protocolsFiles = (await readdir(INPUT)).filter((f) => f.endsWith(".md"));
+if (protocolsFiles.length === 0) {
+    console.log("There are not any markdown files in current directory.");
+    process.exit(1);
+}
 
 await mkdir(OUTPUT, { recursive: true });
-await cp("./static", OUTPUT, { recursive: true });
+await cp(STATIC_DIR, OUTPUT, { recursive: true });
 await build({
-    entryPoints: ["./client/main.ts", "./client/cache.ts"],
+    entryPoints: [CLIENT_MAIN, CLIENT_CACHE],
     outdir: OUTPUT,
     bundle: true,
     format: "iife",
@@ -21,7 +33,6 @@ await build({
     sourcemap: "linked",
 });
 
-const protocolsFiles = await readdir(INPUT);
 const protocols: readonly Protocol[] = await Promise.all(protocolsFiles.map(parseProtocol));
 
 await writeFile(path.join(OUTPUT, "index.html"), renderHome({ protocols }));
