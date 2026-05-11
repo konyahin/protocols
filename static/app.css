@@ -129,6 +129,90 @@ main {
     align-items: center;
     text-align: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.step-final::before {
+    content: "";
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        color-mix(in srgb, var(--pico-ins-color, #16a34a) 28%, transparent),
+        transparent 65%
+    );
+    transform: translate(-50%, -50%) scale(0.35);
+    opacity: 0;
+    pointer-events: none;
+    animation: final-glow 1.6s 0.15s ease-out forwards;
+    z-index: 0;
+}
+
+@keyframes final-glow {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.35);
+    }
+    35% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1.6);
+    }
+}
+
+.step-final .step-content,
+.step-final .step-badge {
+    position: relative;
+    z-index: 1;
+}
+
+.checkmark {
+    display: block;
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 0.5rem;
+}
+
+.checkmark-circle,
+.checkmark-check {
+    fill: none;
+    stroke: var(--pico-ins-color, #16a34a);
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.checkmark-circle {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: draw-circle 0.55s 0.25s ease-out forwards;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.checkmark-check {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: draw-check 0.35s 0.75s ease-out forwards;
+}
+
+@keyframes draw-circle {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes draw-check {
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
 .step-final .step-badge {
@@ -218,9 +302,16 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
     .step,
-    .protocol-progress-fill {
+    .step-final::before,
+    .protocol-progress-fill,
+    .checkmark-circle,
+    .checkmark-check {
         animation: none;
         transition: none;
+    }
+    .checkmark-circle,
+    .checkmark-check {
+        stroke-dashoffset: 0;
     }
 }
 

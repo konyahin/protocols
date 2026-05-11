@@ -13,6 +13,10 @@ export function renderProtocol(data: Protocol): string {
 <article id="step-${total - 1}" class="step step-final" hidden>
     <div class="step-badge">Complete</div>
     <div class="step-content">
+        <svg class="checkmark" viewBox="0 0 52 52" aria-hidden="true">
+            <circle class="checkmark-circle" cx="26" cy="26" r="24"/>
+            <path class="checkmark-check" d="M14 27 l8 8 l16-16"/>
+        </svg>
         <h2>Well done.</h2>
         <p><span id="final-phrase">Take a breath — you earned it.</span></p>
     </div>
