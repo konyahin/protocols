@@ -1,7 +1,5 @@
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/cache.js");
-    });
+    navigator.serviceWorker.register("/cache.js");
 }
 
 document.getElementById("reset-cache")?.addEventListener("click", async (e) => {
@@ -19,31 +17,31 @@ document.getElementById("reset-cache")?.addEventListener("click", async (e) => {
 
 let currentStep = 0;
 document.querySelectorAll<HTMLElement>(".step").forEach((el) => {
-    if (Number(el.id) != currentStep) {
+    if (el.id !== "step-" + currentStep) {
         el.hidden = true;
     }
 
-    el.querySelector(".next")!.addEventListener("click", createSliderListener(1));
-    el.querySelector(".prev")!.addEventListener("click", createSliderListener(-1));
+    el.querySelector(".next")?.addEventListener("click", createSliderListener(1));
+    el.querySelector(".prev")?.addEventListener("click", createSliderListener(-1));
 });
 
 function createSliderListener(step: number) {
-    return async function(e: Event) {
+    return function (e: Event) {
         e.preventDefault();
+
         const newStep = currentStep + step;
-        console.log("New step:", newStep);
         if (newStep < 0) {
             return
         }
 
-        const newArticle = document.getElementById(String(newStep));
+        const newArticle = document.getElementById("step-" + newStep);
         if (newArticle) {
             newArticle.hidden = false
         } else {
             return
         }
 
-        const currentArticle = document.getElementById(String(currentStep));
+        const currentArticle = document.getElementById("step-" + currentStep);
         if (currentArticle) {
             currentArticle.hidden = true
         }

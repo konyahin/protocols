@@ -49,7 +49,7 @@ async function parseProtocol(file: string): Promise<Protocol> {
     let step: Token[] = [];
 
     for (const token of tokens) {
-        if (token.type == "heading" && token.depth == 2) {
+        if (token.type === "heading" && token.depth === 2) {
             steps.push(await marked.parser(step));
             step = [token];
             continue;
