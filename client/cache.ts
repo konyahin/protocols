@@ -1,7 +1,12 @@
-const CACHE = "protocols-v1";
+/// <reference lib="WebWorker" />
+declare const self: ServiceWorkerGlobalScope;
+export {};
+
+const CACHE = "protocols-v0.1";
 const PRECACHE = [
     "/",
     "/index.html",
+    "/main.js",
     "/manifest.json",
     "/pico.min.css",
     "/icons/icon-192.svg",
@@ -41,8 +46,7 @@ self.addEventListener("fetch", (event) => {
                         );
                     }
                     return response;
-                })
-                .catch(() => caches.match("/"));
+                }).catch(() => caches.match("/").then((r) => r ?? Response.error()))
         }),
     );
 });

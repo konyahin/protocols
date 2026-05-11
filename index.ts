@@ -4,12 +4,22 @@ import { renderHome } from "./templates/home.ts";
 import { renderProtocol } from "./templates/protocol.ts";
 import type { Protocol } from "./templates/types.ts";
 import { marked } from "marked";
+import { build } from "esbuild";
 
 const OUTPUT = "./output";
-const INPUT = "./protocols"
+const INPUT = "./protocols";
 
 await mkdir(OUTPUT, { recursive: true });
 await cp("./static", OUTPUT, { recursive: true });
+await build({
+    entryPoints: ["./client/main.ts", "./client/cache.ts"],
+    outdir: OUTPUT,
+    bundle: true,
+    format: "iife",
+    target: "es2022",
+    minify: true,
+    sourcemap: "linked",
+});
 
 const protocolsFiles = await readdir(INPUT);
 
