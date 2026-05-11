@@ -3,7 +3,7 @@ import type { Protocol } from "./types.ts";
 
 export function renderProtocol(data: Protocol): string {
     const steps = data.steps
-        .map((s) => `<article>${s}</article>`)
+        .map((s, i) => renderStep(i, s))
         .join("\n");
     return renderBase({
         title: data.title,
@@ -14,4 +14,16 @@ export function renderProtocol(data: Protocol): string {
         ${steps}
     </main>`,
     });
+}
+
+function renderStep(index: number, step: string): string {
+    return `
+    <article id="${index}" class="step">
+    ${step}
+    <div style="display: flex;">
+        <a class="prev">&larr;Prev</a>
+        <a class="next" style="margin-left: auto;">Next&rarr;</a>
+    </div>
+    </article>
+    `
 }

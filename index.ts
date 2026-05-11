@@ -56,6 +56,7 @@ async function parseProtocol(file: string): Promise<Protocol> {
         }
         step.push(token)
     }
+    steps.push(await marked.parser(step));
 
-    return { title: title, url: `${fileName}.html`, steps: steps };
+    return { title: title, url: `${fileName}.html`, steps: steps.slice(1) };
 }

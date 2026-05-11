@@ -16,3 +16,38 @@ document.getElementById("reset-cache")?.addEventListener("click", async (e) => {
     }
     location.reload();
 });
+
+let currentStep = 0;
+document.querySelectorAll<HTMLElement>(".step").forEach((el) => {
+    if (Number(el.id) != currentStep) {
+        el.hidden = true;
+    }
+
+    el.querySelector(".next")!.addEventListener("click", createSliderListener(1));
+    el.querySelector(".prev")!.addEventListener("click", createSliderListener(-1));
+});
+
+function createSliderListener(step: number) {
+    return async function(e: Event) {
+        e.preventDefault();
+        const newStep = currentStep + step;
+        console.log("New step:", newStep);
+        if (newStep < 0) {
+            return
+        }
+
+        const newArticle = document.getElementById(String(newStep));
+        if (newArticle) {
+            newArticle.hidden = false
+        } else {
+            return
+        }
+
+        const currentArticle = document.getElementById(String(currentStep));
+        if (currentArticle) {
+            currentArticle.hidden = true
+        }
+
+        currentStep = newStep;
+    }
+}
