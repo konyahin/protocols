@@ -1,7 +1,7 @@
 export type Protocol = {
     readonly title: string;
     readonly url: string;
-    readonly content: string;
+    readonly steps: string[];
 };
 
 export type HomePage = {

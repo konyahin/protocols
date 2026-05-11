@@ -3,7 +3,7 @@ import type { HomePage } from "./types.ts";
 
 export function renderHome(data: HomePage): string {
     const items = data.protocols
-        .map((p) => `            <li><a href="${p.url}">${p.title}</a></li>`)
+        .map((p) => `<li><a href="${p.url}">${p.title}</a></li>`)
         .join("\n");
 
     return renderBase({
@@ -16,7 +16,7 @@ export function renderHome(data: HomePage): string {
     </header>
     <main>
         <ul>
-${items}
+            ${items}
         </ul>
     </main>
     <footer>

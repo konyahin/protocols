@@ -3,7 +3,7 @@ import path from "node:path";
 import { renderHome } from "./templates/home.ts";
 import { renderProtocol } from "./templates/protocol.ts";
 import type { Protocol } from "./templates/types.ts";
-import { marked, type Tokens } from "marked";
+import { marked, type Token, type Tokens } from "marked";
 import { build } from "esbuild";
 
 const OUTPUT = "./output";
@@ -45,6 +45,17 @@ async function parseProtocol(file: string): Promise<Protocol> {
     );
     const title = h1?.text ?? fileName;
 
-    const htmlContent = await marked.parse(markdownContent)
-    return { title: title, url: `${fileName}.html`, content: htmlContent };
+    const steps: string[] = [];
+    let step: Token[] = [];
+
+    for (const token of tokens) {
+        if (token.type == "heading" && token.depth == 2) {
+            steps.push(await marked.parser(step));
+            step = [token];
+            continue;
+        }
+        step.push(token)
+    }
+
+    return { title: title, url: `${fileName}.html`, steps: steps };
 }
