@@ -4,7 +4,8 @@ type BaseProps = {
 };
 
 export function renderBase({ title, body }: BaseProps): string {
-    return `<!doctype html>
+    return `
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -18,19 +19,11 @@ export function renderBase({ title, body }: BaseProps): string {
     <link rel="icon" type="image/svg+xml" href="/icons/icon-192.svg">
     <link rel="apple-touch-icon" href="/icons/icon-192.svg">
     <link rel="stylesheet" href="/pico.min.css">
-    <style>
-        html, body { min-height: 100dvh; }
-        body { display: flex; flex-direction: column; }
-        main { flex: 1; display: flex; flex-direction: column; }
-        .step { flex: 1; display: flex; flex-direction: column; }
-        .step-nav { display: flex; margin-top: auto; }
-        .step-nav .next { margin-left: auto; }
-    </style>
+    <link rel="stylesheet" href="/app.css">
     <script src="/main.js" defer></script>
 </head>
 <body>
 ${body}
 </body>
-</html>
-`;
+</html>`;
 }

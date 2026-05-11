@@ -2,13 +2,14 @@
 declare const self: ServiceWorkerGlobalScope;
 export {};
 
-const CACHE = "protocols-v0.1";
+const CACHE = "protocols-v0.2";
 const PRECACHE = [
     "/",
     "/index.html",
     "/main.js",
     "/manifest.json",
     "/pico.min.css",
+    "/app.css",
     "/icons/icon-192.svg",
     "/icons/icon-512.svg",
     "/icons/icon-maskable.svg",

@@ -1,0 +1,46 @@
+html,
+body {
+    min-height: 100dvh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.step {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.step-nav {
+    display: flex;
+    margin-top: auto;
+}
+
+.step-nav .next {
+    margin-left: auto;
+}
+
+main a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+main a:hover article {
+    background: var(--pico-card-border-color);
+    cursor: pointer;
+}
+
+main a article p {
+    margin: 0;
+    color: inherit;
+}

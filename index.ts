@@ -39,24 +39,30 @@ async function parseProtocol(file: string): Promise<Protocol> {
     const fileName = path.parse(file).name;
     const markdownContent = await readFile(path.join(INPUT, file), "utf-8")
 
-    const tokens = marked.lexer(markdownContent)
+    const tokens = marked.lexer(markdownContent);
     const h1 = tokens.find(
         (t): t is Tokens.Heading => t.type === "heading" && t.depth === 1
     );
     const title = h1?.text ?? fileName;
 
-    const steps: string[] = [];
+    const blocks: string[] = [];
     let step: Token[] = [];
 
     for (const token of tokens) {
+        if (token.type === "heading" && token.depth === 1) {
+            // skip h1 title
+            continue
+        }
         if (token.type === "heading" && token.depth === 2) {
-            steps.push(await marked.parser(step));
+            blocks.push(await marked.parser(step));
             step = [token];
             continue;
         }
         step.push(token)
     }
-    steps.push(await marked.parser(step));
+    blocks.push(await marked.parser(step));
 
-    return { title: title, url: `${fileName}.html`, steps: steps.slice(1) };
+    const [description, ...steps] = blocks;
+
+    return { title: title, description: description ?? "", url: `${fileName}.html`, steps: steps };
 }
