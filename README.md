@@ -19,6 +19,11 @@ $ rsync -avz --delete output/ USER@HOST:/var/www/SITE/
 $ rm -rf output/
 ```
 
+The generated site is a PWA, so you can install it on your phone and use it like a native app - offline-capable and launched from your home screen.
+
+- iOS (Safari): open the site, tap the Share button, then `Add to Home Screen`.
+- Android (Chrome): open the site, tap the menu, then `Install app` (or `Add to Home Screen`).
+
 ## Routine
 Each routine is just a markdown file. Like this:
 ```md
@@ -50,3 +55,9 @@ Each section with a second-level heading becomes one step in the routine.
 When you finish all steps, you'll see a final screen.
 
 ![Final step](screenshots/final%20step.png)
+
+## Install on your phone
+The generated site is a PWA, so you can install it on your phone and use it like a native app — offline-capable and launched from your home screen.
+
+- **iOS (Safari):** open the site, tap the Share button, then *Add to Home Screen*.
+- **Android (Chrome):** open the site, tap the menu (⋮), then *Install app* (or *Add to Home Screen*).
